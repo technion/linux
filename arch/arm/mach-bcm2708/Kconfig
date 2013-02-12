@@ -17,6 +17,14 @@ config BCM2708_GPIO
 	help
 	  Include support for the Broadcom(R) BCM2708 gpio.
 
+config BCM2708_GPIO_PPS
+	bool "BCM2708 gpio PPS support"
+	depends on BCM2708_GPIO
+	select ARCH_REQUIRE_GPIOLIB
+        default n
+	help
+	  Include support for Broadcom(R) BCM2708 gpio PPS.
+
 config BCM2708_VCMEM
 	bool "Videocore Memory"
 	depends on MACH_BCM2708

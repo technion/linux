@@ -416,8 +416,7 @@ static struct platform_device bcm2708_vcio_device = {
 		},
 };
 
-#ifdef CONFIG_BCM2708_GPIO
-#define BCM_GPIO_DRIVER_NAME "bcm2708_gpio"
+#ifdef CONFIG_BCM2708_GPIO_PPS
 
 /* PPS-GPIO platform data */
 static struct pps_gpio_platform_data pps_gpio_info = {
@@ -434,6 +433,11 @@ static struct platform_device pps_gpio_device = {
 		.platform_data = &pps_gpio_info
 	},
 };
+
+#endif
+
+#ifdef CONFIG_BCM2708_GPIO
+#define BCM_GPIO_DRIVER_NAME "bcm2708_gpio"
 
 static struct resource bcm2708_gpio_resources[] = {
 	[0] = {			/* general purpose I/O */
@@ -725,6 +729,8 @@ void __init bcm2708_init(void)
 	bcm_register_device(&bcm2708_vcio_device);
 #ifdef CONFIG_BCM2708_GPIO
 	bcm_register_device(&bcm2708_gpio_device);
+#endif
+#ifdef CONFIG_BCM2708_GPIO_PPS
 	bcm_register_device(&pps_gpio_device);
 #endif
 #if defined(CONFIG_W1_MASTER_GPIO) || defined(CONFIG_W1_MASTER_GPIO_MODULE)
