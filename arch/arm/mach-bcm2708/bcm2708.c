@@ -33,6 +33,7 @@
 #include <linux/module.h>
 #include <linux/spi/spi.h>
 #include <linux/w1-gpio.h>
+#include <linux/pps-gpio.h>
 
 #include <linux/version.h>
 #include <linux/clkdev.h>
@@ -418,6 +419,22 @@ static struct platform_device bcm2708_vcio_device = {
 #ifdef CONFIG_BCM2708_GPIO
 #define BCM_GPIO_DRIVER_NAME "bcm2708_gpio"
 
+/* PPS-GPIO platform data */
+static struct pps_gpio_platform_data pps_gpio_info = {
+	.assert_falling_edge = false,
+	.capture_clear = false,
+	.gpio_pin = 24,
+	.gpio_label="PPS",
+};
+
+static struct platform_device pps_gpio_device = {
+	.name = "pps-gpio",
+	.id = -1,
+	.dev = {
+		.platform_data = &pps_gpio_info
+	},
+};
+
 static struct resource bcm2708_gpio_resources[] = {
 	[0] = {			/* general purpose I/O */
 	       .start = GPIO_BASE,
@@ -708,6 +725,7 @@ void __init bcm2708_init(void)
 	bcm_register_device(&bcm2708_vcio_device);
 #ifdef CONFIG_BCM2708_GPIO
 	bcm_register_device(&bcm2708_gpio_device);
+	bcm_register_device(&pps_gpio_device);
 #endif
 #if defined(CONFIG_W1_MASTER_GPIO) || defined(CONFIG_W1_MASTER_GPIO_MODULE)
 	platform_device_register(&w1_device);
