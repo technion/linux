@@ -25,6 +25,13 @@ config BCM2708_GPIO_PPS
 	help
 	  Include support for Broadcom(R) BCM2708 gpio PPS.
 
+config BCM2708_GPIO_PPS_PIN
+	int "GPIO Pin to use for PPS"
+	depends on BCM2708_GPIO_PPS
+        default 24
+	help
+	   Defines the GPIO pin used for PPS
+
 config BCM2708_VCMEM
 	bool "Videocore Memory"
 	depends on MACH_BCM2708
