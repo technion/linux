@@ -423,7 +423,7 @@ static struct pps_gpio_platform_data pps_gpio_info = {
 	.assert_falling_edge = false,
 	.capture_clear = false,
 	.gpio_pin = CONFIG_BCM2708_GPIO_PPS_PIN,
-	.gpio_label="PPS",
+	.gpio_label = "PPS",
 };
 
 static struct platform_device pps_gpio_device = {
@@ -731,7 +731,7 @@ void __init bcm2708_init(void)
 	bcm_register_device(&bcm2708_gpio_device);
 #endif
 #ifdef CONFIG_BCM2708_GPIO_PPS
-	printk(KERN_INFO "bcm2708.c: Registering PPS on GPIO pin %d\n",
+	pr_info("bcm2708.c: Registering PPS on GPIO pin %d\n",
 		CONFIG_BCM2708_GPIO_PPS_PIN);
 	bcm_register_device(&pps_gpio_device);
 #endif
