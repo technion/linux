@@ -25,7 +25,7 @@ INITRD_PHYS := $(initrd_phys-y)
 
 export ZRELADDR INITRD_PHYS PARAMS_PHYS
 
-targets := Image zImage xipImage bootpImage uImage
+targets := Image zImage xipImage bootpImage uImage kernel.img
 
 ifeq ($(CONFIG_XIP_KERNEL),y)
 
@@ -54,6 +54,8 @@ $(obj)/compressed/vmlinux: $(obj)/Image FORCE
 $(obj)/zImage:	$(obj)/compressed/vmlinux FORCE
 	$(call if_changed,objcopy)
 	@echo '  Kernel: $@ is ready'
+	@echo '  IMGTOOL:	Creating arch/arm/boot/kernel.img'
+	@cat $(obj)/first32k $(obj)/zImage > $(obj)/kernel.img
 
 endif
 
